@@ -13,11 +13,14 @@
     var a=document.querySelector("iframe[name='showmessage']");
     var b=a.getAttribute("src");
     var c=b.split("?")[1];
-    var d=document.querySelector(".tableline2").querySelectorAll("tr");
-    var input=document.createElement("input");
-    var e="http://judge.buaa.edu.cn/assignment/judgeDetailsRedirect.jsp?"+c;
-    input.setAttribute("onclick","window.location.href='"+e+"'");
-    input.setAttribute("value","烦死了")
-    input.setAttribute("type","submit")
-    d[1].querySelector("td").appendChild(input);
+    // Append hyper link on the right
+    a.onload=function(){
+        var d=a.contentDocument.querySelector("table a");
+        var detail=document.createElement("a");
+        var e="http://judge.buaa.edu.cn/assignment/judgeDetailsRedirect.jsp?"+c;
+        detail.setAttribute("href",e);
+        detail.innerHTML="<span style=\"margin-left:10%\">More detail</span>";
+        detail.setAttribute("target","_blank")
+        d.appendChild(detail);
+    };
 })();
