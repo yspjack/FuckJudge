@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       btapple
-// @match        http://judge.buaa.edu.cn/assignment/*
+// @match        http://judge.buaa.edu.cn/assignment/programList.jsp*
 // @grant        none
 // ==/UserScript==
 
@@ -20,6 +20,13 @@
         var e="http://judge.buaa.edu.cn/assignment/judgeDetailsRedirect.jsp?"+c;
         detail.setAttribute("href",e);
         detail.innerHTML="<span style=\"margin-left:10%\">More detail</span>";
+        detail.setAttribute("target","_blank")
+        d.appendChild(detail);
+
+        e="http://judge.buaa.edu.cn/assignment/programPerf/judgeReport.jsp?"+c;
+        detail=document.createElement("a");
+        detail.setAttribute("href",e);
+        detail.innerHTML="<span style=\"margin-left:10%\">Performance</span>";
         detail.setAttribute("target","_blank")
         d.appendChild(detail);
     };
