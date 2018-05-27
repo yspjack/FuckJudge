@@ -17,7 +17,7 @@
     var input=document.createElement("input");
     var e="http://judge.buaa.edu.cn/assignment/judgeDetailsRedirect.jsp?"+c;
     input.setAttribute("onclick","window.location.href='"+e+"'");
-    input.setAttribute("value","烦死了")
-    input.setAttribute("type","submit")
+    input.setAttribute("value","烦死了");
+    input.setAttribute("type","submit");
     d[1].querySelector("td").appendChild(input);
 })();
