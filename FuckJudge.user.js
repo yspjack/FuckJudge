@@ -15,18 +15,18 @@
 
 (function () {
     function init_checker() {
-        let option_list = document.getElementsByClassName("option");
+        var option_list = document.getElementsByClassName("option");
         var i = 0;
         for (i = 0; i < option_list.length; i++) {
-            if (option_list[i].value === "") {
+            if (option_list[i].value.trim() === "") {
                 option_list[i].setAttribute("style", "background-color:red;")
             } else {
                 option_list[i].removeAttribute("style");
             }
         }
-        let cloze_list = document.getElementsByClassName("cloze");
+        var cloze_list = document.getElementsByClassName("cloze");
         for (i = 0; i < cloze_list.length; i++) {
-            if (cloze_list[i].value === "") {
+            if (cloze_list[i].value.trim() === "") {
                 cloze_list[i].removeAttribute("style");
             } else {
                 cloze_list[i].removeAttribute("style");
