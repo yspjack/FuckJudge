@@ -37,6 +37,7 @@ function empty_checker() {
 function AC_checker_index() {
     console.log("AC_checker works");
     var result_list = document.querySelectorAll(".tableline .tableline2 .formtext table td");
+    var i = 0;
     console.log(result_list.length);
     for (i = 0; i < result_list.length; i++) {
         if (result_list[i].innerText.indexOf("运行时错误") != -1) {
@@ -53,6 +54,7 @@ function AC_checker_program() {
     console.log("AC_checker works");
     var parent = document.querySelector("iframe[name='showmessage']");
     var result_list = parent.contentDocument.querySelectorAll("table table td");
+    var i = 0;
     console.log(result_list.length);
     for (i = 0; i < result_list.length; i++) {
         if (result_list[i].innerText.indexOf("运行时错误") != -1) {
