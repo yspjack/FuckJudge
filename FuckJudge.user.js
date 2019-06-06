@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         FuckJudge
 // @namespace    https://github.com/wfcrs/FuckJudge
-// @version      0.14
+// @version      0.15
 // @description  try to take over the world!
 // @author       btapple & yspjack
 // @match        *://judge.buaa.edu.cn/assignment/programList.jsp*
 // @match        *://judge.e.buaa.edu.cn/assignment/programList.jsp*
 // @match        *://judge.buaa.edu.cn/assignment/index.jsp*
 // @match        *://judge.e.buaa.edu.cn/assignment/index.jsp*
-// @grant        none
+// @grant        GM_setClipboard
 // @supportURL   https://github.com/yspjack/FuckJudge/issues
 // @updateURL    https://github.com/yspjack/FuckJudge/raw/ver_href/FuckJudge.user.js
 // @require     http://judge.buaa.edu.cn/indexcs/js/jquery.js
@@ -65,9 +65,13 @@ function AC_checker_program() {
 
 (function () {
     'use strict';
-    if (window.location.href.match("index\\.jsp")) {
+    if (window.location.href.match("assignment/index\\.jsp")) {
         empty_checker();
         AC_checker_index();
+        $('body').bind('copy', function (e) {
+            GM_setClipboard(window.getSelection().toString(), 'text');
+            return true;
+        });
         return;
     }
     var a = document.querySelector("iframe[name='showmessage']");
