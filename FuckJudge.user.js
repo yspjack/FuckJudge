@@ -11,6 +11,7 @@
 // @grant        none
 // @supportURL   https://github.com/yspjack/FuckJudge/issues
 // @updateURL    https://github.com/yspjack/FuckJudge/raw/ver_href/FuckJudge.user.js
+// @require     http://judge.buaa.edu.cn/indexcs/js/jquery.js
 // ==/UserScript==
 
 function empty_checker() {
@@ -34,37 +35,32 @@ function empty_checker() {
     }
 }
 
+function AC_checker_callback(item) {
+    if (item.innerText.indexOf("运行时错误") != -1) {
+        item.setAttribute("style", "background-color:#8e44ad;color:#ffffff;");
+    } else if (item.innerText === "完全正确") {
+        item.setAttribute("style", "background-color:#5eb95e;color:#ffffff;");
+    } else if (item.innerText === "答案错误") {
+        item.setAttribute("style", "background-color:#e74c3c;color:#ffffff;");
+    }
+}
+
 function AC_checker_index() {
     console.log("AC_checker works");
     var result_list = document.querySelectorAll(".tableline .tableline2 .formtext table td");
-    var i = 0;
     console.log(result_list.length);
-    for (i = 0; i < result_list.length; i++) {
-        if (result_list[i].innerText.indexOf("运行时错误") != -1) {
-            result_list[i].setAttribute("style", "background-color:#8e44ad;color:#ffffff;");
-        } else if (result_list[i].innerText === "完全正确") {
-            result_list[i].setAttribute("style", "background-color:#5eb95e;color:#ffffff;");
-        } else if (result_list[i].innerText === "答案错误") {
-            result_list[i].setAttribute("style", "background-color:#e74c3c;color:#ffffff;");
-        }
-    }
+    result_list.forEach(AC_checker_callback);
 }
 
 function AC_checker_program() {
     console.log("AC_checker works");
     var parent = document.querySelector("iframe[name='showmessage']");
     var result_list = parent.contentDocument.querySelectorAll("table table td");
-    var i = 0;
-    console.log(result_list.length);
-    for (i = 0; i < result_list.length; i++) {
-        if (result_list[i].innerText.indexOf("运行时错误") != -1) {
-            result_list[i].setAttribute("style", "background-color:#8e44ad;color:#ffffff;");
-        } else if (result_list[i].innerText === "完全正确") {
-            result_list[i].setAttribute("style", "background-color:#5eb95e;color:#ffffff;");
-        } else if (result_list[i].innerText === "答案错误") {
-            result_list[i].setAttribute("style", "background-color:#e74c3c;color:#ffffff;");
-        }
+    if (result_list.length == 0) {
+        result_list = parent.contentDocument.querySelectorAll("#result table td");
     }
+    console.log(result_list.length);
+    result_list.forEach(AC_checker_callback);
 }
 
 (function () {
@@ -81,6 +77,9 @@ function AC_checker_program() {
     a.onload = function () {
         AC_checker_program();
         var d = a.contentDocument.querySelector("table a");
+        if (!d) {
+            return;
+        }
         var detail = document.createElement("a");
         let websitePrefix = window.location.href.match(/\/\/j.*\.buaa\.edu\.cn/i)[0];
         let e = websitePrefix + "/assignment/judgeDetailsRedirect.jsp?" + c;
