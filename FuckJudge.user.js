@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name         FuckJudge
 // @namespace    https://github.com/wfcrs/FuckJudge
-// @version      0.15
+// @version      0.16
 // @description  try to take over the world!
 // @author       btapple & yspjack
 // @match        *://judge.buaa.edu.cn/assignment/programList.jsp*
 // @match        *://judge.e.buaa.edu.cn/assignment/programList.jsp*
 // @match        *://judge.buaa.edu.cn/assignment/index.jsp*
 // @match        *://judge.e.buaa.edu.cn/assignment/index.jsp*
+// @match        *://judge.e.buaa.edu.cn/main.jsp*
+// @match        *://judge.buaa.edu.cn/main.jsp*
 // @grant        GM_setClipboard
 // @supportURL   https://github.com/yspjack/FuckJudge/issues
 // @updateURL    https://github.com/yspjack/FuckJudge/raw/ver_href/FuckJudge.user.js
@@ -63,6 +65,20 @@ function AC_checker_program() {
     result_list.forEach(AC_checker_callback);
 }
 
+function progress_color() {
+    let progress_arr = $("#activeAssignsDIV .progress > div");
+    progress_arr.each(function () {
+        $(this).removeClass('progress-bar-info');
+        if ($(this).attr('aria-valuenow') < 10) {
+            $(this).addClass('progress-bar-danger');
+        } else if ($(this).attr('aria-valuenow') < 30) {
+            $(this).addClass('progress-bar-warning');
+        } else {
+            $(this).addClass('progress-bar-info');
+        }
+    });
+}
+
 (function () {
     'use strict';
     if (window.location.href.match("assignment/index\\.jsp")) {
@@ -72,6 +88,11 @@ function AC_checker_program() {
             GM_setClipboard(window.getSelection().toString(), 'text');
             return true;
         });
+        return;
+    }
+    if (window.location.href.match("main\\.jsp")) {
+        $('#activeEXPsDIV').ready(progress_color);
+        $('#activeAssignsDIV').ready(progress_color);
         return;
     }
     var a = document.querySelector("iframe[name='showmessage']");
@@ -99,5 +120,6 @@ function AC_checker_program() {
         perfRank.innerHTML = "<span style=\"margin-left:10%\">Performance</span>";
         perfRank.setAttribute("target", "_blank");
         d.appendChild(perfRank);
-    };
-})();
+    }
+}
+)();
